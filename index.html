@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduAgenda – Gestión Académica</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+<!-- ===================== PANTALLA DE LOGIN ===================== -->
+<div id="login-screen" class="auth-screen">
+  <div class="auth-bg">
+    <div class="auth-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+  </div>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+      <h1 class="logo-text">EduAgenda</h1>
+      <p class="logo-sub">Gestión Académica Inteligente</p>
+    </div>
+
+    <!-- Tabs de Login / Registro -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Iniciar Sesión</button>
+      <button class="auth-tab" data-tab="register">Registrarse</button>
+    </div>
+
+    <!-- Formulario Login -->
+    <form id="login-form" class="auth-form active">
+      <div class="form-group">
+        <label><i class="fas fa-envelope"></i> Correo electrónico</label>
+        <input type="email" id="login-email" placeholder="tucorreo@email.com" required />
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-lock"></i> Contraseña</label>
+        <input type="password" id="login-password" placeholder="••••••••" required />
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="remember-me" />
+        <label for="remember-me">Recordar sesión</label>
+      </div>
+      <button type="submit" class="btn-primary btn-full">
+        <i class="fas fa-sign-in-alt"></i> Ingresar
+      </button>
+      <div id="login-error" class="form-error hidden"></div>
+      <div class="demo-accounts">
+        <p>Cuentas de demostración:</p>
+        <div class="demo-btns">
+          <button type="button" class="demo-btn" data-role="estudiante">
+            <i class="fas fa-user-graduate"></i> Estudiante
+          </button>
+          <button type="button" class="demo-btn" data-role="docente">
+            <i class="fas fa-chalkboard-teacher"></i> Docente
+          </button>
+          <button type="button" class="demo-btn" data-role="acudiente">
+            <i class="fas fa-user-friends"></i> Acudiente
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Formulario Registro -->
+    <form id="register-form" class="auth-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> Nombre completo</label>
+          <input type="text" id="reg-nombre" placeholder="Tu nombre" required />
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-phone"></i> Teléfono</label>
+          <input type="tel" id="reg-telefono" placeholder="Teléfono" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-envelope"></i> Correo electrónico</label>
+        <input type="email" id="reg-email" placeholder="tucorreo@email.com" required />
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-lock"></i> Contraseña</label>
+        <input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" required />
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-users"></i> Rol</label>
+        <select id="reg-rol" required>
+          <option value="">Selecciona tu rol...</option>
+          <option value="estudiante">Estudiante</option>
+          <option value="docente">Docente</option>
+          <option value="acudiente">Acudiente/Padre</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary btn-full">
+        <i class="fas fa-user-plus"></i> Crear cuenta
+      </button>
+      <div id="register-error" class="form-error hidden"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== PANTALLA SELECCIÓN ESTUDIANTE (ACUDIENTE) ===================== -->
+<div id="select-student-screen" class="student-select-screen hidden">
+  <div class="ss-bg">
+    <div class="ss-shapes">
+      <div class="ss-shape ss-shape-1"></div>
+      <div class="ss-shape ss-shape-2"></div>
+    </div>
+  </div>
+  <div class="ss-content">
+    <div class="ss-header">
+      <div class="ss-logo">
+        <div class="ss-logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div>
+          <h1>EduAgenda</h1>
+          <p>Bienvenido/a, <span id="ss-parent-name">Acudiente</span> 👋</p>
+        </div>
+      </div>
+      <button class="btn-secondary ss-logout" id="ss-logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Salir
+      </button>
+    </div>
+
+    <div class="ss-card">
+      <div class="ss-card-header">
+        <div class="ss-card-icon"><i class="fas fa-users"></i></div>
+        <div>
+          <h2>Seleccionar Estudiante</h2>
+          <p>Elige al estudiante cuya información deseas consultar</p>
+        </div>
+      </div>
+
+      <div id="ss-students-list" class="ss-students-list">
+        <div class="loading"><i class="fas fa-spinner fa-spin"></i> Cargando estudiantes...</div>
+      </div>
+
+      <!-- Vincular nuevo estudiante -->
+      <div class="ss-add-student">
+        <button class="btn-secondary" id="ss-btn-vincular">
+          <i class="fas fa-user-plus"></i> Vincular estudiante
+        </button>
+        <p class="help-text">¿Tu hijo/a no aparece? Vincúlalo ingresando su correo registrado.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== APP PRINCIPAL ===================== -->
+<div id="app" class="app-container hidden">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <i class="fas fa-graduation-cap"></i>
+        <span>EduAgenda</span>
+      </div>
+      <button id="sidebar-close" class="sidebar-close-btn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebar-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="user-info">
+        <span id="sidebar-name">Usuario</span>
+        <span id="sidebar-role" class="role-badge">Estudiante</span>
+      </div>
+    </div>
+
+    <!-- Banner estudiante activo (solo acudientes) -->
+    <div id="sidebar-student-banner" class="sidebar-student-banner hidden">
+      <div class="ssb-label"><i class="fas fa-eye"></i> Viendo a:</div>
+      <div class="ssb-info">
+        <div class="ssb-avatar" id="ssb-avatar">?</div>
+        <div class="ssb-detail">
+          <span id="ssb-name">Estudiante</span>
+          <span id="ssb-grade" class="ssb-grade">Grado —</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a href="#" class="nav-link active" data-page="dashboard">
+          <i class="fas fa-th-large"></i><span>Dashboard</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="materias">
+          <i class="fas fa-book"></i><span>Materias</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="horario">
+          <i class="fas fa-calendar-week"></i><span>Horario</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="tareas">
+          <i class="fas fa-tasks"></i><span>Tareas</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="evaluaciones">
+          <i class="fas fa-file-alt"></i><span>Evaluaciones</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="notas">
+          <i class="fas fa-star"></i><span>Notas</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="asistencia">
+          <i class="fas fa-clipboard-check"></i><span>Asistencia</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="mensajes">
+          <i class="fas fa-comments"></i><span>Mensajes</span>
+          <span id="msg-badge" class="badge hidden">0</span>
+        </a></li>
+        <li><a href="#" class="nav-link" data-page="ia-tutor">
+          <i class="fas fa-robot"></i><span>Tutor IA</span>
+          <span class="badge-new">NUEVO</span>
+        </a></li>
+        <li class="nav-separator"></li>
+        <li><a href="#" class="nav-link" data-page="perfil">
+          <i class="fas fa-user-cog"></i><span>Mi Perfil</span>
+        </a></li>
+        <li><a href="#" class="nav-link" id="logout-btn">
+          <i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span>
+        </a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      <small>EduAgenda v1.0 © 2025</small>
+    </div>
+  </aside>
+
+  <!-- OVERLAY MOBILE -->
+  <div id="sidebar-overlay" class="sidebar-overlay hidden"></div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button id="menu-toggle" class="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <h2 id="page-title">Dashboard</h2>
+      </div>
+      <div class="topbar-right">
+        <!-- Botón Cambiar Estudiante (solo visible para acudientes) -->
+        <button class="btn-cambiar-estudiante hidden" id="btn-cambiar-estudiante" title="Cambiar estudiante visualizado">
+          <i class="fas fa-exchange-alt"></i>
+          <span id="btn-cambiar-label">Cambiar estudiante</span>
+        </button>
+        <button class="topbar-btn" id="notif-btn" title="Notificaciones">
+          <i class="fas fa-bell"></i>
+          <span id="notif-count" class="badge hidden">0</span>
+        </button>
+        <button class="topbar-btn" title="Tema oscuro" id="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <div class="topbar-avatar" id="topbar-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- PÁGINAS -->
+    <div id="pages-container" class="pages-container">
+
+      <!-- ========== DASHBOARD ========== -->
+      <section id="page-dashboard" class="page active">
+        <div class="page-header">
+          <div>
+            <h2 class="page-title-main">¡Bienvenido, <span id="dash-nombre">Usuario</span>! 👋</h2>
+            <p class="page-subtitle" id="dash-fecha"></p>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stat-card stat-blue">
+            <div class="stat-icon"><i class="fas fa-book"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" id="stat-materias">0</span>
+              <span class="stat-label">Materias</span>
+            </div>
+          </div>
+          <div class="stat-card stat-orange">
+            <div class="stat-icon"><i class="fas fa-tasks"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" id="stat-tareas">0</span>
+              <span class="stat-label">Tareas Pendientes</span>
+            </div>
+          </div>
+          <div class="stat-card stat-green">
+            <div class="stat-icon"><i class="fas fa-star"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" id="stat-promedio">-</span>
+              <span class="stat-label">Promedio General</span>
+            </div>
+          </div>
+          <div class="stat-card stat-red">
+            <div class="stat-icon"><i class="fas fa-calendar-times"></i></div>
+            <div class="stat-info">
+              <span class="stat-num" id="stat-faltas">0</span>
+              <span class="stat-label">Faltas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+          <!-- Tareas Próximas -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3><i class="fas fa-clock"></i> Tareas Próximas</h3>
+              <a href="#" class="ver-mas" data-page="tareas">Ver todas</a>
+            </div>
+            <div id="dash-tareas-list" class="dash-list">
+              <div class="empty-state"><i class="fas fa-check-circle"></i><p>No hay tareas pendientes</p></div>
+            </div>
+          </div>
+
+          <!-- Evaluaciones Próximas -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3><i class="fas fa-file-alt"></i> Próximas Evaluaciones</h3>
+              <a href="#" class="ver-mas" data-page="evaluaciones">Ver todas</a>
+            </div>
+            <div id="dash-eval-list" class="dash-list">
+              <div class="empty-state"><i class="fas fa-calendar-check"></i><p>No hay evaluaciones próximas</p></div>
+            </div>
+          </div>
+
+          <!-- Gráfico de Notas -->
+          <div class="dash-card dash-card-wide">
+            <div class="dash-card-header">
+              <h3><i class="fas fa-chart-bar"></i> Rendimiento por Materia</h3>
+            </div>
+            <div style="height:260px; position:relative;">
+              <canvas id="chart-notas"></canvas>
+            </div>
+          </div>
+
+          <!-- Mensajes Recientes -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3><i class="fas fa-comments"></i> Mensajes Recientes</h3>
+              <a href="#" class="ver-mas" data-page="mensajes">Ver todos</a>
+            </div>
+            <div id="dash-msg-list" class="dash-list">
+              <div class="empty-state"><i class="fas fa-inbox"></i><p>No hay mensajes</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== MATERIAS ========== -->
+      <section id="page-materias" class="page">
+        <div class="page-header">
+          <h2 class="page-title-main"><i class="fas fa-book"></i> Materias</h2>
+          <button class="btn-primary" id="btn-nueva-materia" data-roles="docente">
+            <i class="fas fa-plus"></i> Nueva Materia
+          </button>
+        </div>
+        <div class="search-bar">
+          <i class="fas fa-search"></i>
+          <input type="text" id="search-materias" placeholder="Buscar materia..." />
+        </div>
+        <div id="materias-grid" class="materias-grid">
+          <div class="loading"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </section>
+
+      <!-- ========== HORARIO ========== -->
+      <section id="page-horario" class="page">
+        <div class="page-header">
+          <h2 class="page-title-main"><i class="fas fa-calendar-week"></i> Horario Semanal</h2>
+          <button class="btn-primary" id="btn-nuevo-horario" data-roles="docente">
+            <i class="fas fa-plus"></i> Agregar Clase
+          </button>
+        </div>
+        <div id="horario-container" class="horario-container">
+          <div class="loading"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </section>
+
+      <!-- ========== TAREAS ========== -->
+      <section id="page-tareas" class="page">
+        <div class="page-header">
+          <h2 class="page-title-main"><i class="fas fa-tasks"></i> Tareas</h2>
+          <button class="btn-primary" id="btn-nueva-tarea">
+            <i class="fas fa-plus"></i> Nueva Tarea
+          </button>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="pendiente">Pendientes</button>
+          <button class="filter-btn" data-filter="en_progreso">En progreso</button>
+          <button class="filter-btn" data-filter="completada">Completadas</button>
+          <select id="filter-materia-tarea" class="filter-select">
+            <option value="">Todas las materias</option>
+          </select>
+        </div>
+        <div id="tareas-container" class="tareas-container">
+          <div class="loading"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </section>
+
+      <!-- ========== EVALUACIONES ========== -->
+      <section id="page-evaluaciones" class="page">
+        <div class="page-header">
+          <h2 class="page-title-main"><i class="fas fa-file-alt"></i> Evaluaciones</h2>
+          <button class="btn-primary" id="btn-nueva-eval" data-roles="docente">
+            <i class="fas fa-plus"></i> Nueva Evaluación
+          </button>
+        </div>
+        <div class="filter-bar">
+          <select id="filter-materia-eval" class="filter-select">
+            <option value="">Todas las materias</option>
+          </select>
+          <select id="filter-tipo-eval" class="filter-select">
+            <option value="">Todos los tipos</option>
+            <option value="examen">Examen</option>
+            <option value="quiz">Quiz</option>
+            <option value="trabajo">Trabajo</option>
+            <option value="proyecto">Proyecto</option>
+            <option value="oral">Oral</option>
+          </select>
+        </div>
+        <div id="eval-container" class="eval-container">
+          <div class="loading"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </section>
+
+      <!-- ========== NOTAS ========== -->
+      <section id="page-notas" class="page">
+        <div class="page-header">
+          <h2 class="page-title-main"><i class="fas fa-star"></i> Notas y Calificaciones</h2>
+          <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;">
+            <span id="notas-sync-indicator" class="sync-indicator" style="display:none;">
+              <span class="sync-dot"></span> Actualización automática
+            </span>
+            <button class="btn-primary" id="btn-nueva-nota" data-roles="docente">
+              <i class="fas fa-plus"></i> Registrar Nota
+            </button>
+          </div>
+        </div>
+        <!-- Proyección de Nota -->
+        <div class="proyeccion-card">
+          <div class="proy-header">
+            <h3><i class="fas fa-calculator"></i> Calculadora de Proyección</h3>
+            <p>Calcula qué nota necesitas para aprobar</p>
+          </div>
+          <div class="proy-body">
+            <div class="proy-inputs">
+              <div class="form-group">
+                <label>Nota actual</label>
+                <input type="number" id="proy-actual" placeholder="ej: 3.5" min="0" max="5" step="0.1" />
+              </div>
+              <div class="form-group">
+                <label>% completado</label>
+                <input type="number" id="proy-porcentaje" placeholder="ej: 60" min="0" max="100" />
+              </div>
+              <div class="form-group">
+                <label>Nota mínima</label>
+                <input type="number" id="proy-minima" placeholder="ej: 3.0" min="0" max="5" step="0.1" />
+              </div>
+              <button class="btn-secondary" id="btn-calcular-proy">
+                <i class="fas fa-calculator"></i> Calcular
+              </button>
+            </div>
+            <div id="proy-resultado" class="proy-resultado hidden"></div>
+          </div>
+        </div>
+        <!-- Tabla de Notas -->
+        <div class="filter-bar">
+          <select id="filter-materia-notas" class="filter-select">
+            <option value="">Todas las materias</option>
+          </select>
+        </div>
+        <div id="notas-container" class="notas-container">
+          <div class="loading"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </section>
+
+      <!-- ========== ASISTENCIA ========== -->
+      <section id="page-asistencia" class="page">
+        <div class="page-header">
+          <h2 class="page-title-main"><i class="fas fa-clipboard-check"></i> Asistencia</h2>
+          <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;">
+            <span id="asistencia-sync-indicator" class="sync-indicator" style="display:none;">
+              <span class="sync-dot"></span> Actualización automática
+            </span>
+            <button class="btn-primary" id="btn-nueva-falta" data-roles="docente">
+              <i class="fas fa-plus"></i> Registrar Falta
+            </button>
+          </div>
+        </div>
+        <div class="filter-bar">
+          <select id="filter-materia-faltas" class="filter-select">
+            <option value="">Todas las materias</option>
+          </select>
+          <select id="filter-justificada" class="filter-select">
+            <option value="">Todas</option>
+            <option value="true">Justificadas</option>
+            <option value="false">Sin justificar</option>
+          </select>
+        </div>
+        <div class="asist-stats">
+          <div class="asist-stat">
+            <span id="total-faltas">0</span>
+            <label>Total Faltas</label>
+          </div>
+          <div class="asist-stat">
+            <span id="faltas-justificadas">0</span>
+            <label>Justificadas</label>
+          </div>
+          <div class="asist-stat">
+            <span id="faltas-injustificadas">0</span>
+            <label>Sin Justificar</label>
+          </div>
+        </div>
+        <div id="faltas-container" class="faltas-container">
+          <div class="loading"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </section>
+
+      <!-- ========== MENSAJES ========== -->
+      <section id="page-mensajes" class="page">
+        <div class="page-header">
+          <h2 class="page-title-main"><i class="fas fa-comments"></i> Mensajes</h2>
+          <button class="btn-primary" id="btn-nuevo-msg">
+            <i class="fas fa-paper-plane"></i> Nuevo Mensaje
+          </button>
+        </div>
+        <div class="mensajes-layout">
+          <div class="msg-list-panel">
+            <div class="msg-search">
+              <i class="fas fa-search"></i>
+              <input type="text" id="search-msg" placeholder="Buscar mensajes..." />
+            </div>
+            <div id="msg-list" class="msg-list">
+              <div class="loading"><i class="fas fa-spinner fa-spin"></i></div>
+            </div>
+          </div>
+          <div class="msg-detail-panel" id="msg-detail">
+            <div class="msg-empty-state">
+              <i class="fas fa-comments"></i>
+              <p>Selecciona un mensaje para leerlo</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== TUTOR IA ========== -->
+      <section id="page-ia-tutor" class="page">
+        <div class="page-header">
+          <h2 class="page-title-main"><i class="fas fa-robot"></i> Tutor IA</h2>
+          <button class="btn-secondary" id="btn-clear-chat">
+            <i class="fas fa-trash"></i> Limpiar chat
+          </button>
+        </div>
+        <div class="ia-config">
+          <div class="ia-config-bar">
+            <div class="form-group">
+              <label><i class="fas fa-key"></i> API Key de Gemini (gratuita)</label>
+              <div class="api-key-input">
+                <input type="password" id="gemini-api-key" placeholder="Pega aquí tu API Key de Google Gemini..." />
+                <button class="btn-secondary" id="btn-save-key"><i class="fas fa-save"></i> Guardar</button>
+              </div>
+              <small class="help-text">
+                Obtén tu API Key gratis en 
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">
+                  Google AI Studio <i class="fas fa-external-link-alt"></i>
+                </a>
+              </small>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-book"></i> Contexto: Materia actual</label>
+              <select id="ia-materia-select">
+                <option value="">General (sin materia específica)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="chat-container" id="chat-container">
+          <div class="chat-messages" id="chat-messages">
+            <div class="chat-bubble ia-bubble welcome-bubble">
+              <div class="bubble-avatar"><i class="fas fa-robot"></i></div>
+              <div class="bubble-content">
+                <p><strong>¡Hola! Soy tu Tutor IA 🤖</strong></p>
+                <p>Puedo ayudarte con:</p>
+                <ul>
+                  <li>📚 Explicar temas de tus materias</li>
+                  <li>✏️ Resolver dudas académicas</li>
+                  <li>📝 Sugerencias para tus tareas</li>
+                  <li>🧮 Cálculos y ejercicios</li>
+                  <li>📊 Analizar tu rendimiento académico</li>
+                </ul>
+                <p>Configura tu API Key de Gemini (gratuita) para comenzar.</p>
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <div class="chat-suggestions" id="chat-suggestions">
+              <button class="suggestion-btn">¿Cómo puedo mejorar mis notas?</button>
+              <button class="suggestion-btn">Explícame la fotosíntesis</button>
+              <button class="suggestion-btn">¿Qué es la derivada?</button>
+              <button class="suggestion-btn">Resumen de la Segunda Guerra Mundial</button>
+            </div>
+            <div class="chat-input-row">
+              <textarea id="chat-input" placeholder="Escribe tu pregunta aquí..." rows="1"></textarea>
+              <button class="btn-send" id="btn-send-msg">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== PERFIL ========== -->
+      <section id="page-perfil" class="page">
+        <div class="page-header">
+          <h2 class="page-title-main"><i class="fas fa-user-cog"></i> Mi Perfil</h2>
+        </div>
+        <div class="perfil-layout">
+          <div class="perfil-card">
+            <div class="perfil-avatar-section">
+              <div class="perfil-avatar" id="perfil-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="perfil-info-main">
+                <h2 id="perfil-nombre">Nombre</h2>
+                <span id="perfil-rol-badge" class="role-badge">Rol</span>
+                <p id="perfil-correo"><i class="fas fa-envelope"></i> correo@email.com</p>
+              </div>
+            </div>
+            <form id="perfil-form" class="perfil-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nombre completo</label>
+                  <input type="text" id="edit-nombre" placeholder="Tu nombre" />
+                </div>
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <input type="tel" id="edit-telefono" placeholder="Teléfono" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Correo electrónico</label>
+                <input type="email" id="edit-correo" placeholder="tucorreo@email.com" />
+              </div>
+              <div class="form-group">
+                <label>Nueva contraseña (dejar vacío para no cambiar)</label>
+                <input type="password" id="edit-password" placeholder="Nueva contraseña" />
+              </div>
+              <button type="submit" class="btn-primary">
+                <i class="fas fa-save"></i> Guardar Cambios
+              </button>
+            </form>
+          </div>
+          <!-- Mis estadísticas -->
+          <div class="perfil-stats-card">
+            <h3><i class="fas fa-chart-pie"></i> Mis Estadísticas</h3>
+            <div style="height:220px; position:relative;">
+              <canvas id="chart-perfil"></canvas>
+            </div>
+            <div class="perfil-stats-list" id="perfil-stats-list"></div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /pages-container -->
+  </main>
+</div>
+
+<!-- ===================== MODALES ===================== -->
+
+<!-- Modal genérico -->
+<div id="modal-overlay" class="modal-overlay hidden">
+  <div class="modal" id="modal-box">
+    <div class="modal-header">
+      <h3 id="modal-title">Modal</h3>
+      <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer">
+      <button class="btn-secondary" id="modal-cancel">Cancelar</button>
+      <button class="btn-primary" id="modal-confirm">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notificaciones -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- Loader global -->
+<div id="global-loader" class="global-loader hidden">
+  <div class="loader-spinner">
+    <i class="fas fa-graduation-cap fa-spin"></i>
+    <p>Cargando EduAgenda...</p>
+  </div>
+</div>
+
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/acudiente.js"></script>
+<script src="js/materias.js"></script>
+<script src="js/tareas.js"></script>
+<script src="js/evaluaciones.js"></script>
+<script src="js/notas.js"></script>
+<script src="js/asistencia.js"></script>
+<script src="js/mensajes.js"></script>
+<script src="js/horario.js"></script>
+<script src="js/ia-tutor.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/perfil.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

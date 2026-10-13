@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guía de Instalación – EduAgenda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #3B5BDB;
+      --secondary: #40C057;
+      --accent: #FD7E14;
+      --danger: #FA5252;
+      --bg: #f0f2f8;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --muted: #64748b;
+      --code-bg: #1e293b;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #3B5BDB, #845EF7);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .header h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: .5rem; }
+    .header p { font-size: 1rem; opacity: .85; }
+    .header .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(255,255,255,.2);
+      color: white;
+      border: 1px solid rgba(255,255,255,.3);
+      padding: .5rem 1.2rem;
+      border-radius: 8px;
+      font-size: .9rem;
+      margin-top: 1rem;
+      transition: all .2s;
+    }
+    .header .back-btn:hover { background: rgba(255,255,255,.3); text-decoration: none; }
+    /* Layout */
+    .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+    /* TOC */
+    .toc {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 12px rgba(59,91,219,.08);
+    }
+    .toc h2 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: var(--primary); }
+    .toc ol { padding-left: 1.2rem; }
+    .toc li { margin-bottom: .35rem; font-size: .9rem; }
+    /* Sections */
+    .section {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(59,91,219,.08);
+    }
+    .section h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .section h3 { font-size: 1rem; font-weight: 700; margin: 1.2rem 0 .5rem; color: var(--text); }
+    .section h4 { font-size: .9rem; font-weight: 600; margin: 1rem 0 .3rem; color: var(--muted); }
+    .section p { margin-bottom: .75rem; font-size: .92rem; color: var(--text); }
+    .section ul, .section ol { padding-left: 1.4rem; margin-bottom: .75rem; font-size: .92rem; }
+    .section li { margin-bottom: .3rem; }
+    /* Code blocks */
+    pre {
+      background: var(--code-bg);
+      color: #e2e8f0;
+      padding: 1rem 1.2rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: .85rem;
+      line-height: 1.6;
+      margin: .75rem 0;
+      position: relative;
+    }
+    code { font-family: 'Fira Code', 'Cascadia Code', monospace; }
+    p code, li code {
+      background: #f1f5f9;
+      color: var(--danger);
+      padding: .1rem .4rem;
+      border-radius: 4px;
+      font-size: .85em;
+    }
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: .2rem .6rem;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    .badge-blue { background: #e8ecff; color: var(--primary); }
+    .badge-green { background: #ebfbee; color: var(--secondary); }
+    .badge-orange { background: #fff4e6; color: var(--accent); }
+    /* Alert */
+    .alert {
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin: .75rem 0;
+      font-size: .9rem;
+      display: flex;
+      gap: .75rem;
+      align-items: flex-start;
+    }
+    .alert-info { background: #e8ecff; border-left: 3px solid var(--primary); }
+    .alert-success { background: #ebfbee; border-left: 3px solid var(--secondary); }
+    .alert-warning { background: #fff4e6; border-left: 3px solid var(--accent); }
+    .alert i { margin-top: .1rem; }
+    /* Steps */
+    .steps { counter-reset: step; }
+    .step {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      padding: 1rem;
+      background: var(--bg);
+      border-radius: 8px;
+    }
+    .step-num {
+      width: 32px; height: 32px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: .9rem;
+      flex-shrink: 0;
+    }
+    .step-content { flex: 1; }
+    .step-content strong { display: block; margin-bottom: .3rem; }
+    /* File structure */
+    .file-tree {
+      background: var(--code-bg);
+      color: #a5d8ff;
+      padding: 1.2rem;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: .85rem;
+      line-height: 1.8;
+    }
+    .file-tree .folder { color: #ffd43b; }
+    .file-tree .file { color: #a9e34b; }
+    .file-tree .comment { color: #868e96; }
+    /* Table */
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; margin: .75rem 0; }
+    th { background: var(--bg); padding: .6rem .8rem; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border); }
+    td { padding: .6rem .8rem; border-bottom: 1px solid var(--border); }
+    /* Footer */
+    .footer { text-align: center; padding: 2rem; color: var(--muted); font-size: .85rem; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1><i class="fas fa-book-open"></i> Guía Completa de EduAgenda</h1>
+  <p>Cómo funciona el código, cómo modificarlo y cómo publicarlo como app</p>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Volver a la App</a>
+</div>
+
+<div class="container">
+
+  <!-- ===== CÓMO ABRIR LA APP ===== -->
+  <div class="section" style="border-left:5px solid #40C057; background:linear-gradient(135deg,#ebfbee,#f0fff4);">
+    <h2 style="color:#2f9e44;"><i class="fas fa-play-circle"></i> ¿Cómo abrir la aplicación ahora mismo?</h2>
+
+    <div class="alert alert-success" style="margin-bottom:1rem;">
+      <i class="fas fa-rocket" style="color:#40C057"></i>
+      <div>
+        <strong>Opción más fácil:</strong> Usa el botón <strong>"Publish"</strong> (pestaña arriba en esta plataforma). La app se publica en segundos y recibes una URL pública lista para compartir desde celular o computador.
+      </div>
+    </div>
+
+    <h3>🖥️ Ver la app en esta misma plataforma (Preview)</h3>
+    <p>Si estás trabajando en <strong>Genspark</strong> u otra plataforma de edición, haz clic en el botón <strong>"Preview"</strong> o <strong>"Open in browser"</strong> para ver la app funcionando en tiempo real.</p>
+
+    <h3>💻 Ver en tu computador con VS Code</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Descarga los archivos del proyecto</strong>
+          Descarga todos los archivos (index.html, carpetas css/ y js/) en una carpeta llamada <code>EduAgenda</code>.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Abre la carpeta en VS Code</strong>
+          <pre><code>File → Open Folder → Selecciona la carpeta EduAgenda</code></pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Instala Live Server (si no lo tienes)</strong>
+          <pre><code>Ctrl+Shift+X → Buscar "Live Server" → Install</code></pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Inicia el servidor</strong>
+          Clic derecho sobre <code>index.html</code> en el panel izquierdo → <strong>"Open with Live Server"</strong><br/>
+          Se abre automáticamente en: <code style="background:#f1f5f9;padding:.1rem .4rem;border-radius:4px;">http://127.0.0.1:5500/index.html</code>
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-warning" style="margin-top:.5rem;">
+      <i class="fas fa-exclamation-triangle" style="color:var(--accent)"></i>
+      <div><strong>¡Importante!</strong> No abras <code>index.html</code> haciendo doble clic en el archivo. Siempre usa <strong>Live Server</strong> o un servidor web. Si abres el archivo directamente, las llamadas a la API de base de datos no funcionarán.</div>
+    </div>
+
+    <h3>📱 Ver en el celular (misma red WiFi)</h3>
+    <p>Con Live Server activo en VS Code, desde tu celular abre el navegador y escribe la IP de tu computador seguida del puerto 5500:</p>
+    <pre><code>Ejemplo: http://192.168.1.10:5500/index.html
+(La IP la ves en VS Code en la barra inferior, o busca tu IP local en Configuración de Red)</code></pre>
+
+    <h3>🌐 Compartir con otros (publicar gratis)</h3>
+    <p>Para que cualquier persona acceda desde cualquier dispositivo:</p>
+    <ul>
+      <li><strong>Genspark Publish Tab</strong> → 1 clic, URL instantánea ✅</li>
+      <li><strong>Netlify</strong> → netlify.com → arrastra la carpeta → URL gratis ✅</li>
+      <li><strong>GitHub Pages</strong> → gratis, requiere cuenta GitHub ✅</li>
+    </ul>
+
+    <h3>🔑 Cuentas para probar la app</h3>
+    <table>
+      <tr><th>Rol</th><th>Correo</th><th>Contraseña</th><th>Descripción</th></tr>
+      <tr><td>🎓 Estudiante</td><td><code>estudiante@demo.com</code></td><td><code>demo123</code></td><td>Ve sus materias, tareas y notas</td></tr>
+      <tr><td>👩‍🏫 Docente</td><td><code>docente@demo.com</code></td><td><code>demo123</code></td><td>Crea materias, evalúa y registra</td></tr>
+      <tr><td>👨‍👩‍👧 Acudiente</td><td><code>acudiente@demo.com</code></td><td><code>demo123</code></td><td>Ve información de 2 hijos</td></tr>
+    </table>
+    <p style="font-size:.85rem;color:var(--muted);margin-top:.5rem;"><i class="fas fa-info-circle"></i> O usa los botones de demo en la pantalla de login.</p>
+  </div>
+
+  <!-- TABLA DE CONTENIDO -->
+  <div class="toc">
+    <h2><i class="fas fa-list"></i> Tabla de Contenido</h2>
+    <ol>
+      <li><a href="#arquitectura">Arquitectura del Proyecto</a></li>
+      <li><a href="#estructura">Estructura de Archivos</a></li>
+      <li><a href="#base-datos">Base de Datos (API de Tablas)</a></li>
+      <li><a href="#modulos">Explicación de cada Módulo JS</a></li>
+      <li><a href="#ia">Configurar la IA (Gemini Gratuito)</a></li>
+      <li><a href="#personalizar">Cómo Personalizar el Código</a></li>
+      <li><a href="#vscode">Cómo Usar en Visual Studio Code</a></li>
+      <li><a href="#publicar">Cómo Publicar como App (PWA / Play Store)</a></li>
+      <li><a href="#preguntas">Preguntas Frecuentes</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. ARQUITECTURA -->
+  <div class="section" id="arquitectura">
+    <h2><i class="fas fa-sitemap"></i> 1. Arquitectura del Proyecto</h2>
+    <p>EduAgenda es una <strong>aplicación web estática</strong> (SPA – Single Page Application) construida solo con:</p>
+    <ul>
+      <li><span class="badge badge-orange">HTML5</span> – Estructura y contenido</li>
+      <li><span class="badge badge-blue">CSS3</span> – Estilos y diseño responsivo</li>
+      <li><span class="badge badge-green">JavaScript ES6+</span> – Lógica, navegación y datos</li>
+    </ul>
+    <div class="alert alert-info">
+      <i class="fas fa-info-circle" style="color:var(--primary)"></i>
+      <div><strong>¿Por qué no usa Python o Java?</strong> Esta app web funciona completamente en el navegador del usuario, sin necesitar un servidor. Los datos se guardan en la nube a través de una API REST. Esto la hace más rápida, barata de hospedar (¡gratis!) y funciona desde cualquier dispositivo.</div>
+    </div>
+    <h3>Flujo de Datos</h3>
+    <pre><code>Usuario (navegador)
+    ↕ HTML/CSS/JS (tu código)
+    ↕ fetch() – llamadas HTTP
+    ↕ API REST de Tablas (base de datos en la nube)
+         tablas: usuarios, materias, tareas, evaluaciones, notas, faltas, mensajes, horarios
+
+    Además:
+    JavaScript ↔ Google Gemini API (IA – opcional, API Key gratuita)</code></pre>
+  </div>
+
+  <!-- 2. ESTRUCTURA -->
+  <div class="section" id="estructura">
+    <h2><i class="fas fa-folder-open"></i> 2. Estructura de Archivos</h2>
+    <div class="file-tree">
+<span class="folder">EduAgenda/</span>
+├── <span class="file">index.html</span>          <span class="comment">← Página principal (toda la app)</span>
+├── <span class="file">guia-instalacion.html</span> <span class="comment">← Esta guía</span>
+├── <span class="folder">css/</span>
+│   ├── <span class="file">style.css</span>         <span class="comment">← Estilos principales (colores, componentes)</span>
+│   └── <span class="file">responsive.css</span>    <span class="comment">← Estilos para móvil/tablet</span>
+└── <span class="folder">js/</span>
+    ├── <span class="file">utils.js</span>          <span class="comment">← Funciones de ayuda (toast, fechas, etc.)</span>
+    ├── <span class="file">api.js</span>            <span class="comment">← Comunicación con la base de datos</span>
+    ├── <span class="file">auth.js</span>           <span class="comment">← Login, registro, sesión</span>
+    ├── <span class="file">app.js</span>            <span class="comment">← Controlador principal (navegación)</span>
+    ├── <span class="file">materias.js</span>       <span class="comment">← Módulo de materias</span>
+    ├── <span class="file">tareas.js</span>         <span class="comment">← Módulo de tareas</span>
+    ├── <span class="file">evaluaciones.js</span>   <span class="comment">← Módulo de evaluaciones</span>
+    ├── <span class="file">notas.js</span>          <span class="comment">← Módulo de calificaciones</span>
+    ├── <span class="file">asistencia.js</span>     <span class="comment">← Módulo de asistencia/faltas</span>
+    ├── <span class="file">mensajes.js</span>       <span class="comment">← Módulo de mensajería</span>
+    ├── <span class="file">horario.js</span>        <span class="comment">← Módulo de horario semanal</span>
+    ├── <span class="file">ia-tutor.js</span>       <span class="comment">← Tutor IA con Gemini</span>
+    ├── <span class="file">dashboard.js</span>      <span class="comment">← Dashboard con estadísticas</span>
+    └── <span class="file">perfil.js</span>         <span class="comment">← Módulo de perfil de usuario</span>
+    </div>
+  </div>
+
+  <!-- 3. BASE DE DATOS -->
+  <div class="section" id="base-datos">
+    <h2><i class="fas fa-database"></i> 3. Base de Datos (Gratuita y en la Nube)</h2>
+    <p>EduAgenda usa una <strong>API REST de tablas</strong> que almacena los datos en la nube automáticamente. No necesitas instalar MySQL, MongoDB ni ninguna base de datos local.</p>
+
+    <h3>Tablas del sistema:</h3>
+    <table>
+      <tr><th>Tabla</th><th>Contenido</th><th>Campos principales</th></tr>
+      <tr><td><code>usuarios</code></td><td>Estudiantes, docentes, acudientes</td><td>nombre, correo, rol, contrasena</td></tr>
+      <tr><td><code>materias</code></td><td>Asignaturas del colegio</td><td>nombre, descripcion, id_profesor, color</td></tr>
+      <tr><td><code>tareas</code></td><td>Trabajos y deberes</td><td>titulo, prioridad, fecha_entrega, estado</td></tr>
+      <tr><td><code>evaluaciones</code></td><td>Exámenes y quices</td><td>titulo, tipo, porcentaje, fecha_evaluacion</td></tr>
+      <tr><td><code>notas</code></td><td>Calificaciones</td><td>id_estudiante, calificacion, id_evaluacion</td></tr>
+      <tr><td><code>faltas</code></td><td>Ausencias y asistencia</td><td>id_estudiante, fecha_falta, justificada</td></tr>
+      <tr><td><code>mensajes</code></td><td>Mensajería interna</td><td>id_remitente, id_destinatario, contenido</td></tr>
+      <tr><td><code>horarios</code></td><td>Horario semanal</td><td>dia_semana, hora_inicio, hora_fin, salon</td></tr>
+    </table>
+
+    <h3>Cómo funciona la API (ejemplo):</h3>
+    <pre><code>// Obtener todas las tareas
+fetch('tables/tareas?limit=100')
+  .then(r => r.json())
+  .then(data => console.log(data.data)); // array de tareas
+
+// Crear nueva tarea
+fetch('tables/tareas', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    titulo: 'Tarea de Matemáticas',
+    prioridad: 'alta',
+    fecha_entrega: '2025-12-20',
+    estado: 'pendiente'
+  })
+});</code></pre>
+  </div>
+
+  <!-- 4. MÓDULOS JS -->
+  <div class="section" id="modulos">
+    <h2><i class="fas fa-puzzle-piece"></i> 4. Explicación de cada Módulo JavaScript</h2>
+
+    <h3>📁 utils.js – Funciones de Ayuda</h3>
+    <p>Contiene herramientas usadas en toda la app:</p>
+    <ul>
+      <li><code>showToast(mensaje, tipo)</code> – Muestra notificaciones emergentes</li>
+      <li><code>abrirModal({titulo, cuerpo, onConfirm})</code> – Abre ventana modal</li>
+      <li><code>formatearFecha(fecha)</code> – Convierte fechas a formato legible</li>
+      <li><code>fechaRelativa(fecha)</code> – "Hoy", "Mañana", "En 3 días"</li>
+      <li><code>calcularPromedio(valores)</code> – Promedia un array de notas</li>
+      <li><code>Storage.get/set/remove(key)</code> – Guarda datos en el navegador</li>
+      <li><code>markdownToHtml(texto)</code> – Convierte texto markdown a HTML (para IA)</li>
+    </ul>
+
+    <h3>📁 auth.js – Autenticación</h3>
+    <p>Maneja el login, registro y sesión:</p>
+    <ul>
+      <li>Las contraseñas se guardan con <code>btoa()</code> (codificación básica base64)</li>
+      <li>La sesión se guarda en <code>localStorage</code></li>
+      <li>Hay 3 cuentas demo: estudiante, docente, acudiente</li>
+      <li>Para cambiar a mayor seguridad, reemplaza <code>btoa()</code> por hash SHA-256</li>
+    </ul>
+
+    <h3>📁 api.js – Comunicación con la Base de Datos</h3>
+    <p>Centraliza todas las llamadas HTTP:</p>
+    <ul>
+      <li><code>API.get(tabla, params)</code> – Listar registros</li>
+      <li><code>API.create(tabla, datos)</code> – Crear registro</li>
+      <li><code>API.update(tabla, id, datos)</code> – Actualizar</li>
+      <li><code>API.delete(tabla, id)</code> – Eliminar</li>
+    </ul>
+
+    <h3>📁 app.js – Controlador Principal</h3>
+    <p>Controla la navegación entre páginas:</p>
+    <ul>
+      <li><code>cambiarPagina(nombre)</code> – Navega entre módulos sin recargar</li>
+      <li>Al cambiar de página, carga automáticamente los datos correspondientes</li>
+    </ul>
+
+    <h3>📁 ia-tutor.js – Tutor con Inteligencia Artificial</h3>
+    <p>Conecta con la API de Google Gemini:</p>
+    <ul>
+      <li>Mantiene historial de conversación</li>
+      <li>Crea un prompt personalizado con los datos del estudiante</li>
+      <li>Convierte Markdown a HTML para mejor presentación</li>
+      <li>Guarda la API Key en localStorage</li>
+    </ul>
+  </div>
+
+  <!-- 5. IA -->
+  <div class="section" id="ia">
+    <h2><i class="fas fa-robot"></i> 5. Configurar la IA (Google Gemini – GRATIS)</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Ir a Google AI Studio</strong>
+          Ve a <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Iniciar sesión con tu cuenta de Google</strong>
+          Cualquier cuenta de Gmail funciona. No necesitas tarjeta de crédito.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Crear API Key</strong>
+          Haz clic en "Create API Key" → "Create API Key in new project". Copia la clave generada.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Pegar en EduAgenda</strong>
+          Ve a la sección "Tutor IA" en la app, pega tu API Key en el campo correspondiente y haz clic en "Guardar".
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-success">
+      <i class="fas fa-check-circle" style="color:var(--secondary)"></i>
+      <div><strong>El plan gratuito de Gemini incluye:</strong> 15 solicitudes por minuto, 1 millón de tokens por minuto, 1500 solicitudes por día. ¡Más que suficiente para uso académico!</div>
+    </div>
+    <div class="alert alert-warning">
+      <i class="fas fa-exclamation-triangle" style="color:var(--accent)"></i>
+      <div><strong>Importante de seguridad:</strong> La API Key se guarda en el navegador del usuario (localStorage). No la compartas públicamente. Para producción real, considera usar un backend que oculte la clave.</div>
+    </div>
+  </div>
+
+  <!-- 6. PERSONALIZAR -->
+  <div class="section" id="personalizar">
+    <h2><i class="fas fa-paint-brush"></i> 6. Cómo Personalizar el Código</h2>
+
+    <h3>🎨 Cambiar colores</h3>
+    <p>Abre <code>css/style.css</code> y modifica las variables al inicio del archivo:</p>
+    <pre><code>:root {
+  --primary: #3B5BDB;    /* Azul principal – cambia este color */
+  --secondary: #40C057;  /* Verde – aprobado, éxito */
+  --accent: #FD7E14;     /* Naranja – advertencias */
+  --danger: #FA5252;     /* Rojo – errores, reprobado */
+  --bg: #f0f2f8;         /* Fondo de la app */
+}</code></pre>
+    <p>Por ejemplo, para hacer la app verde esmeralda:</p>
+    <pre><code>--primary: #00897B;   /* Verde esmeralda */
+--secondary: #26A69A; /* Teal */</code></pre>
+
+    <h3>📝 Cambiar el nombre de la app</h3>
+    <p>En <code>index.html</code>, busca y reemplaza todas las ocurrencias de "EduAgenda" con el nombre deseado. También cambia el <code>&lt;title&gt;</code> en la línea 5.</p>
+
+    <h3>🏫 Cambiar la escala de calificación</h3>
+    <p>En <code>js/utils.js</code>, función <code>claseNota()</code>:</p>
+    <pre><code>function claseNota(nota) {
+  const n = parseFloat(nota);
+  if (n >= 4.0) return 'alta';   // ← Cambiar a >= 8 para escala de 10
+  if (n >= 3.0) return 'media';  // ← Cambiar a >= 6
+  return 'baja';
+}</code></pre>
+    <p>Para escala de 0-10, cambia también los inputs min/max de calificación en <code>js/notas.js</code>.</p>
+
+    <h3>📚 Agregar nuevos campos a las materias</h3>
+    <p>En <code>js/materias.js</code>, función <code>abrirFormulario()</code>, agrega campos al HTML del formulario, y en el objeto <code>datos</code> incluye los nuevos valores.</p>
+
+    <h3>🤖 Cambiar el comportamiento del Tutor IA</h3>
+    <p>En <code>js/ia-tutor.js</code>, función <code>_llamarGemini()</code>, modifica la variable <code>systemPrompt</code> para cambiar la personalidad y comportamiento del tutor.</p>
+
+    <h3>🎭 Cambiar el modelo de IA</h3>
+    <pre><code>// En js/ia-tutor.js, línea que dice:
+const url = `...models/gemini-1.5-flash:generateContent?key=${this._apiKey}`;
+
+// Puedes cambiar a:
+// gemini-1.5-pro  (más potente, pero más lento)
+// gemini-2.0-flash (más nuevo y rápido)</code></pre>
+  </div>
+
+  <!-- 7. VS CODE -->
+  <div class="section" id="vscode">
+    <h2><i class="fas fa-code"></i> 7. Cómo Usar en Visual Studio Code</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Instalar Visual Studio Code</strong>
+          Descarga desde <a href="https://code.visualstudio.com" target="_blank">code.visualstudio.com</a> (gratuito).
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Descargar los archivos del proyecto</strong>
+          En la plataforma donde está publicado EduAgenda, busca la opción "Descargar código" o copia los archivos manualmente.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Abrir la carpeta del proyecto en VS Code</strong>
+          <pre><code>File → Open Folder → Selecciona la carpeta EduAgenda</code></pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Instalar la extensión "Live Server"</strong>
+          <pre><code>Ctrl+Shift+X → Buscar "Live Server" → Instalar</code></pre>
+          Esta extensión te permite ver los cambios en tiempo real.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <strong>Iniciar el servidor local</strong>
+          Clic derecho en <code>index.html</code> → "Open with Live Server"<br/>
+          Se abre en: <code>http://127.0.0.1:5500/index.html</code>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <strong>Editar y guardar</strong>
+          Cada vez que guardes un archivo (<code>Ctrl+S</code>), el navegador se actualiza automáticamente.
+        </div>
+      </div>
+    </div>
+
+    <h3>Extensiones recomendadas para VS Code:</h3>
+    <ul>
+      <li><strong>Live Server</strong> – Servidor local con recarga automática</li>
+      <li><strong>Prettier</strong> – Formatea el código automáticamente</li>
+      <li><strong>Auto Rename Tag</strong> – Renombra tags HTML en parejas</li>
+      <li><strong>ES Lint</strong> – Detecta errores en JavaScript</li>
+      <li><strong>CSS Peek</strong> – Ver estilos CSS desde el HTML</li>
+    </ul>
+
+    <div class="alert alert-info">
+      <i class="fas fa-lightbulb" style="color:var(--primary)"></i>
+      <div><strong>Atajo útil en VS Code:</strong> Presiona <code>F12</code> o <code>Ctrl+Shift+I</code> en el navegador para abrir las Herramientas de Desarrollador y ver errores en la Consola (pestaña "Console").</div>
+    </div>
+  </div>
+
+  <!-- 8. PUBLICAR -->
+  <div class="section" id="publicar">
+    <h2><i class="fas fa-rocket"></i> 8. Cómo Publicar la App</h2>
+
+    <h3>🌐 Opción A: Publicar como Sitio Web (RECOMENDADO – GRATIS)</h3>
+    <p>Con esta opción cualquier persona puede acceder desde su navegador (celular o computador).</p>
+
+    <h4>Netlify (más fácil – gratuito de por vida):</h4>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">Ve a <a href="https://www.netlify.com" target="_blank">netlify.com</a> y crea una cuenta gratuita.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">En el dashboard, arrastra y suelta la carpeta del proyecto en la zona de "deploy".</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">¡Listo! Netlify te da una URL como <code>https://eduagenda-tuapp.netlify.app</code></div>
+      </div>
+    </div>
+
+    <h4>GitHub Pages (también gratuito):</h4>
+    <pre><code># 1. Crear repositorio en github.com
+# 2. Subir todos los archivos
+git init
+git add .
+git commit -m "EduAgenda v1.0"
+git push origin main
+
+# 3. En GitHub: Settings → Pages → Source: main branch
+# URL: https://tu-usuario.github.io/eduagenda</code></pre>
+
+    <h3>📱 Opción B: Instalar como App en el Celular (PWA)</h3>
+    <p>Una <strong>PWA (Progressive Web App)</strong> se instala en el celular igual que una app normal, pero sin pasar por la Play Store.</p>
+    <p>Para habilitarla, agrega estos archivos al proyecto:</p>
+
+    <h4>1. Crear manifest.json:</h4>
+    <pre><code>{
+  "name": "EduAgenda",
+  "short_name": "EduAgenda",
+  "description": "Gestión Académica Inteligente",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#3B5BDB",
+  "theme_color": "#3B5BDB",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}</code></pre>
+
+    <h4>2. Crear service-worker.js (para modo offline):</h4>
+    <pre><code>const CACHE_NAME = 'eduagenda-v1';
+const ARCHIVOS = [
+  '/', '/index.html',
+  '/css/style.css', '/css/responsive.css',
+  '/js/utils.js', '/js/app.js'
+];
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(c => c.addAll(ARCHIVOS))
+  );
+});
+
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(r => r || fetch(e.request))
+  );
+});</code></pre>
+
+    <h4>3. Registrar el Service Worker en index.html (antes de &lt;/body&gt;):</h4>
+    <pre><code>&lt;script&gt;
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js');
+}
+&lt;/script&gt;</code></pre>
+
+    <h4>4. Agregar al &lt;head&gt; de index.html:</h4>
+    <pre><code>&lt;link rel="manifest" href="manifest.json"&gt;
+&lt;meta name="theme-color" content="#3B5BDB"&gt;
+&lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;</code></pre>
+
+    <p>Cuando los usuarios visiten el sitio en Chrome (Android) o Safari (iPhone), verán la opción <strong>"Agregar a pantalla de inicio"</strong>.</p>
+
+    <h3>🏪 Opción C: Publicar en Google Play Store</h3>
+    <div class="alert alert-warning">
+      <i class="fas fa-exclamation-triangle" style="color:var(--accent)"></i>
+      <div><strong>Requiere:</strong> Cuenta de desarrollador Google Play ($25 USD pago único) y usar una herramienta como <a href="https://www.pwabuilder.com" target="_blank">PWABuilder.com</a> para convertir la PWA en APK.</div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">Primero publica tu PWA en Netlify o GitHub Pages.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">Ve a <a href="https://www.pwabuilder.com" target="_blank">pwabuilder.com</a> y pega la URL de tu app.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">Selecciona "Android" → genera el APK firmado.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">Sube el APK a <a href="https://play.google.com/console" target="_blank">Google Play Console</a>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. FAQ -->
+  <div class="section" id="preguntas">
+    <h2><i class="fas fa-question-circle"></i> 9. Preguntas Frecuentes</h2>
+
+    <h3>❓ ¿Los datos se pierden si cierro el navegador?</h3>
+    <p>No. Los datos (materias, tareas, notas, etc.) se guardan en la <strong>base de datos en la nube</strong> a través de la API. Solo la sesión del usuario puede cerrarse, pero los datos permanecen.</p>
+
+    <h3>❓ ¿Funciona sin internet?</h3>
+    <p>Si instalas como PWA con Service Worker, la app puede cargar offline, pero no podrá guardar ni leer datos sin conexión (requiere backend adicional).</p>
+
+    <h3>❓ ¿Cómo agrego más usuarios?</h3>
+    <p>Cualquier persona puede registrarse en la app usando el formulario de "Registrarse". O puedes crear cuentas desde el panel de administración de la base de datos.</p>
+
+    <h3>❓ ¿Puedo cambiar el idioma?</h3>
+    <p>Busca todos los textos en <code>index.html</code> y los archivos JS y reemplázalos. Los textos de la interfaz están en los archivos HTML y JS directamente.</p>
+
+    <h3>❓ ¿Cómo cambio la nota mínima aprobatoria?</h3>
+    <p>En <code>js/notas.js</code>, busca <code>prom >= 3.0</code> y cambia el 3.0 por tu nota mínima. También en <code>js/utils.js</code> función <code>claseNota()</code>.</p>
+
+    <h3>❓ ¿Puedo usar otra IA además de Gemini?</h3>
+    <p>Sí. En <code>js/ia-tutor.js</code>, función <code>_llamarGemini()</code>, cambia la URL y el formato del cuerpo (body) según la API que quieras usar. Opciones gratuitas: Groq API (Llama 3), Together AI.</p>
+
+    <h3>❓ ¿Cómo hacer un respaldo de los datos?</h3>
+    <p>Desde la consola del navegador puedes usar la API para exportar datos a JSON:</p>
+    <pre><code>fetch('tables/tareas?limit=1000')
+  .then(r => r.json())
+  .then(d => console.log(JSON.stringify(d.data)));</code></pre>
+
+    <h3>❓ ¿Cómo depurar errores?</h3>
+    <p>Abre las <strong>Herramientas de Desarrollador</strong> del navegador (F12), ve a la pestaña <strong>Console</strong>. Los errores aparecen en rojo. Los módulos JS muestran "✅ módulo.js cargado" si están bien.</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>EduAgenda v1.0 – Documentación técnica | Emanuel Valencia Parra & Ximena González Arenas – Grado 11-3</p>
+  <p style="margin-top:.5rem;"><a href="index.html">← Volver a la App</a></p>
+</div>
+
+</body>
+</html>

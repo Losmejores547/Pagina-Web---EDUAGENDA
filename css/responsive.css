@@ -1,0 +1,195 @@
+/* =========================================================
+   EduAgenda – Estilos Responsivos (Mobile First)
+   ========================================================= */
+
+/* ===================== TABLET (max 1024px) ===================== */
+@media (max-width: 1024px) {
+  :root { --sidebar-w: 240px; }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .dash-card-wide { grid-column: 1; }
+
+  .perfil-layout { grid-template-columns: 1fr; }
+  .ia-config-bar { grid-template-columns: 1fr; }
+
+  .mensajes-layout { grid-template-columns: 280px 1fr; }
+}
+
+/* ===================== ACUDIENTE – RESPONSIVE ===================== */
+@media (max-width: 600px) {
+  .btn-cambiar-estudiante #btn-cambiar-label { display: none; }
+  .btn-cambiar-estudiante { padding: .45rem .7rem; border-radius: 50%; width: 38px; justify-content: center; }
+  .ss-card { padding: 1.2rem; }
+  .ss-card-header { flex-direction: column; gap: .6rem; }
+  .ss-student-card { padding: .85rem 1rem; }
+  .ss-student-avatar { width: 44px; height: 44px; font-size: 1rem; }
+}
+
+/* ===================== MOBILE LARGE (max 768px) ===================== */
+@media (max-width: 768px) {
+  /* Sidebar hidden on mobile */
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: none;
+    z-index: 200;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-lg);
+  }
+  .sidebar-close-btn { display: flex; }
+  .sidebar-overlay.visible { display: block !important; }
+
+  /* Main content full width */
+  .main-content { margin-left: 0; }
+
+  /* Topbar */
+  .menu-toggle { display: flex; }
+  .topbar { padding: 0 1rem; }
+
+  /* Pages */
+  .pages-container { padding: 1rem; }
+
+  /* Auth */
+  .auth-card { padding: 1.5rem; max-width: 100%; }
+  .form-row { grid-template-columns: 1fr; }
+
+  /* Stats */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Materias */
+  .materias-grid { grid-template-columns: 1fr; }
+
+  /* Evaluaciones */
+  .eval-container { grid-template-columns: 1fr; }
+
+  /* Mensajes */
+  .mensajes-layout { grid-template-columns: 1fr; }
+  .msg-list-panel { height: 300px; }
+  .msg-detail-panel { height: 400px; }
+
+  /* Page header */
+  .page-header { flex-direction: column; align-items: flex-start; }
+
+  /* Proyección */
+  .proy-inputs { flex-direction: column; }
+  .proy-inputs .form-group { width: 100%; }
+
+  /* Notas table */
+  .notas-table { font-size: 0.8rem; }
+  .notas-table th, .notas-table td { padding: 0.5rem 0.6rem; }
+
+  /* Horario */
+  .horario-container { -webkit-overflow-scrolling: touch; }
+
+  /* Perfil */
+  .perfil-avatar-section { flex-direction: column; text-align: center; }
+
+  /* Chat */
+  .chat-container { height: calc(100vh - 420px); min-height: 350px; }
+  .chat-bubble { max-width: 90%; }
+
+  /* Asistencia stats */
+  .asist-stats { flex-direction: row; }
+
+  /* Filter bar */
+  .filter-bar { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.25rem; }
+}
+
+/* ===================== MOBILE SMALL (max 480px) ===================== */
+@media (max-width: 480px) {
+  /* Auth */
+  .auth-card { padding: 1.2rem; }
+  .demo-btns { flex-direction: column; align-items: center; }
+  .demo-btn { width: 100%; justify-content: center; }
+
+  /* Stats */
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .stat-card { padding: 0.85rem; }
+  .stat-icon { width: 40px; height: 40px; font-size: 1rem; }
+  .stat-num { font-size: 1.4rem; }
+  .stat-label { font-size: 0.72rem; }
+
+  /* Topbar */
+  .topbar-left h2 { font-size: 0.95rem; }
+
+  /* Tarea card */
+  .tarea-card { flex-wrap: wrap; }
+  .tarea-actions { width: 100%; justify-content: flex-end; margin-top: 0.5rem; }
+
+  /* Page title */
+  .page-title-main { font-size: 1.15rem; }
+
+  /* Modal */
+  .modal { max-height: 95vh; margin: 0.5rem; }
+  .modal-header { padding: 1rem; }
+  .modal-body { padding: 1rem; }
+  .modal-footer { padding: 0.75rem 1rem; }
+
+  /* Toast */
+  .toast-container { bottom: 0.75rem; right: 0.75rem; left: 0.75rem; }
+  .toast { min-width: auto; }
+
+  /* Chat */
+  .chat-bubble { max-width: 95%; }
+  .ia-config-bar { padding: 0.75rem; }
+
+  /* Asist stats */
+  .asist-stats { flex-direction: column; }
+  .asist-stat { flex: none; }
+
+  /* Mensajes full width */
+  .mensajes-layout { grid-template-columns: 1fr; height: auto; }
+}
+
+/* ===================== PRINT ===================== */
+@media print {
+  .sidebar, .topbar, .modal-overlay, .toast-container { display: none !important; }
+  .main-content { margin-left: 0; }
+  .page { display: block !important; }
+  body { background: white; color: black; }
+}
+
+/* ===================== LANDSCAPE MOBILE ===================== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .auth-screen { align-items: flex-start; padding: 1rem 0; }
+  .auth-card { max-height: 90vh; overflow-y: auto; }
+  .logo-icon { width: 50px; height: 50px; font-size: 1.4rem; }
+  .chat-container { min-height: 250px; }
+}
+
+/* ===================== LARGE SCREENS (min 1400px) ===================== */
+@media (min-width: 1400px) {
+  .stats-grid { grid-template-columns: repeat(4, 1fr); }
+  .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+  .materias-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+}
+
+/* ===================== TOUCH DEVICES ===================== */
+@media (hover: none) and (pointer: coarse) {
+  .nav-link, .btn-primary, .btn-secondary, .filter-btn {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .btn-icon { min-width: 44px; min-height: 44px; }
+  .tarea-check { width: 28px; height: 28px; }
+}
+
+/* ===================== DARK MODE ADJUSTMENTS ===================== */
+body.dark .auth-screen {
+  background: linear-gradient(135deg, #1e2847 0%, #2d1e47 60%, #162418 100%);
+}
+body.dark .stat-card {
+  border-left-width: 3px;
+}
+body.dark .horario-table th {
+  background: var(--primary-dark);
+}
+body.dark .bubble-content {
+  background: var(--surface-2);
+}
+body.dark .sidebar {
+  border-right-color: var(--border);
+}
