@@ -1,0 +1,456 @@
+[
+  {
+    "name": "usuarios",
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "description": "ID único del usuario"
+      },
+      {
+        "name": "nombre",
+        "type": "text",
+        "description": "Nombre completo del usuario"
+      },
+      {
+        "name": "correo",
+        "type": "text",
+        "description": "Correo electrónico"
+      },
+      {
+        "name": "contrasena",
+        "type": "text",
+        "description": "Contraseña hasheada"
+      },
+      {
+        "name": "rol",
+        "type": "text",
+        "description": "Rol: estudiante, docente, acudiente"
+      },
+      {
+        "name": "telefono",
+        "type": "text",
+        "description": "Teléfono de contacto"
+      },
+      {
+        "name": "foto",
+        "type": "text",
+        "description": "URL de foto de perfil"
+      },
+      {
+        "name": "activo",
+        "type": "bool",
+        "description": "Si el usuario está activo"
+      }
+    ]
+  },
+  {
+    "name": "materias",
+    "fields": [
+      {
+        "name": "id",
+        "type": "text"
+      },
+      {
+        "name": "nombre",
+        "type": "text",
+        "description": "Nombre de la materia"
+      },
+      {
+        "name": "descripcion",
+        "type": "text",
+        "description": "Descripción de la materia"
+      },
+      {
+        "name": "id_profesor",
+        "type": "text",
+        "description": "ID del profesor que dicta la materia"
+      },
+      {
+        "name": "nombre_profesor",
+        "type": "text",
+        "description": "Nombre del profesor"
+      },
+      {
+        "name": "color",
+        "type": "text",
+        "description": "Color de identificación"
+      },
+      {
+        "name": "icono",
+        "type": "text",
+        "description": "Icono FontAwesome"
+      },
+      {
+        "name": "usuario_id",
+        "type": "text",
+        "description": "ID del usuario propietario"
+      }
+    ]
+  },
+  {
+    "name": "tareas",
+    "fields": [
+      {
+        "name": "id",
+        "type": "text"
+      },
+      {
+        "name": "titulo",
+        "type": "text"
+      },
+      {
+        "name": "descripcion",
+        "type": "rich_text"
+      },
+      {
+        "name": "fecha_entrega",
+        "type": "text"
+      },
+      {
+        "name": "prioridad",
+        "type": "text",
+        "options": [
+          "alta",
+          "media",
+          "baja"
+        ]
+      },
+      {
+        "name": "estado",
+        "type": "text",
+        "options": [
+          "pendiente",
+          "en_progreso",
+          "completada"
+        ]
+      },
+      {
+        "name": "id_materia",
+        "type": "text"
+      },
+      {
+        "name": "nombre_materia",
+        "type": "text"
+      },
+      {
+        "name": "usuario_id",
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "name": "evaluaciones",
+    "fields": [
+      {
+        "name": "id",
+        "type": "text"
+      },
+      {
+        "name": "titulo",
+        "type": "text"
+      },
+      {
+        "name": "porcentaje",
+        "type": "number"
+      },
+      {
+        "name": "fecha_evaluacion",
+        "type": "text"
+      },
+      {
+        "name": "tipo",
+        "type": "text",
+        "options": [
+          "examen",
+          "quiz",
+          "trabajo",
+          "proyecto",
+          "oral"
+        ]
+      },
+      {
+        "name": "id_materia",
+        "type": "text"
+      },
+      {
+        "name": "nombre_materia",
+        "type": "text"
+      },
+      {
+        "name": "usuario_id",
+        "type": "text"
+      },
+      {
+        "name": "descripcion",
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "name": "notas",
+    "fields": [
+      {
+        "name": "id",
+        "type": "text"
+      },
+      {
+        "name": "id_estudiante",
+        "type": "text",
+        "description": "UUID del estudiante"
+      },
+      {
+        "name": "nombre_estudiante",
+        "type": "text"
+      },
+      {
+        "name": "id_profesor",
+        "type": "text",
+        "description": "UUID del docente que registra la nota"
+      },
+      {
+        "name": "nombre_profesor",
+        "type": "text",
+        "description": "Nombre completo del docente"
+      },
+      {
+        "name": "id_evaluacion",
+        "type": "text"
+      },
+      {
+        "name": "nombre_evaluacion",
+        "type": "text"
+      },
+      {
+        "name": "calificacion",
+        "type": "number"
+      },
+      {
+        "name": "id_materia",
+        "type": "text"
+      },
+      {
+        "name": "nombre_materia",
+        "type": "text"
+      },
+      {
+        "name": "fecha_actividad",
+        "type": "text",
+        "description": "Fecha en que se registra o realiza la actividad"
+      },
+      {
+        "name": "estado",
+        "type": "text",
+        "description": "Completado | Pendiente | En revisión | No entregado",
+        "options": [
+          "Completado",
+          "Pendiente",
+          "En revisión",
+          "No entregado"
+        ]
+      },
+      {
+        "name": "tipo_actividad",
+        "type": "text",
+        "description": "Tipo: Taller, Examen, Tarea, Proyecto, Quizz, Participación"
+      },
+      {
+        "name": "comentario",
+        "type": "text"
+      },
+      {
+        "name": "usuario_id",
+        "type": "text",
+        "description": "Igual a id_profesor, compatibilidad"
+      }
+    ]
+  },
+  {
+    "name": "faltas",
+    "fields": [
+      {
+        "name": "id",
+        "type": "text"
+      },
+      {
+        "name": "id_estudiante",
+        "type": "text",
+        "description": "UUID del estudiante"
+      },
+      {
+        "name": "nombre_estudiante",
+        "type": "text"
+      },
+      {
+        "name": "id_profesor",
+        "type": "text",
+        "description": "UUID del docente que registra la falta"
+      },
+      {
+        "name": "nombre_profesor",
+        "type": "text",
+        "description": "Nombre completo del docente"
+      },
+      {
+        "name": "id_materia",
+        "type": "text"
+      },
+      {
+        "name": "nombre_materia",
+        "type": "text"
+      },
+      {
+        "name": "fecha_falta",
+        "type": "text"
+      },
+      {
+        "name": "justificacion",
+        "type": "text"
+      },
+      {
+        "name": "justificada",
+        "type": "bool"
+      },
+      {
+        "name": "observacion",
+        "type": "text",
+        "description": "Observación adicional del docente"
+      },
+      {
+        "name": "usuario_id",
+        "type": "text",
+        "description": "Igual a id_profesor, mantiene compatibilidad"
+      }
+    ]
+  },
+  {
+    "name": "mensajes",
+    "fields": [
+      {
+        "name": "id",
+        "type": "text"
+      },
+      {
+        "name": "id_remitente",
+        "type": "text"
+      },
+      {
+        "name": "nombre_remitente",
+        "type": "text"
+      },
+      {
+        "name": "rol_remitente",
+        "type": "text"
+      },
+      {
+        "name": "id_destinatario",
+        "type": "text"
+      },
+      {
+        "name": "nombre_destinatario",
+        "type": "text"
+      },
+      {
+        "name": "contenido",
+        "type": "rich_text"
+      },
+      {
+        "name": "fecha_enviado",
+        "type": "text"
+      },
+      {
+        "name": "leido",
+        "type": "bool"
+      }
+    ]
+  },
+  {
+    "name": "horarios",
+    "fields": [
+      {
+        "name": "id",
+        "type": "text"
+      },
+      {
+        "name": "id_materia",
+        "type": "text"
+      },
+      {
+        "name": "nombre_materia",
+        "type": "text"
+      },
+      {
+        "name": "dia_semana",
+        "type": "text",
+        "options": [
+          "Lunes",
+          "Martes",
+          "Miércoles",
+          "Jueves",
+          "Viernes",
+          "Sábado"
+        ]
+      },
+      {
+        "name": "hora_inicio",
+        "type": "text"
+      },
+      {
+        "name": "hora_fin",
+        "type": "text"
+      },
+      {
+        "name": "salon",
+        "type": "text"
+      },
+      {
+        "name": "usuario_id",
+        "type": "text"
+      },
+      {
+        "name": "color",
+        "type": "text"
+      }
+    ]
+  },
+  {
+    "name": "vinculos_acudiente",
+    "fields": [
+      {
+        "name": "id",
+        "type": "text",
+        "description": "ID único del vínculo"
+      },
+      {
+        "name": "id_acudiente",
+        "type": "text",
+        "description": "ID del usuario acudiente/padre"
+      },
+      {
+        "name": "id_estudiante",
+        "type": "text",
+        "description": "ID del usuario estudiante (hijo)"
+      },
+      {
+        "name": "nombre_estudiante",
+        "type": "text",
+        "description": "Nombre del estudiante"
+      },
+      {
+        "name": "grado",
+        "type": "text",
+        "description": "Grado o curso del estudiante"
+      },
+      {
+        "name": "foto_estudiante",
+        "type": "text",
+        "description": "URL foto del estudiante"
+      },
+      {
+        "name": "activo",
+        "type": "bool",
+        "description": "Si el vínculo está activo"
+      }
+    ]
+  }
+]
